@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2020-06-22T10:42:12.828Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>YaoYiShu</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JS问题一</title>
+    <link href="http://yoursite.com/2020/06/22/Js%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2020/06/22/Js%E9%97%AE%E9%A2%98/</id>
+    <published>2020-06-22T09:36:20.310Z</published>
+    <updated>2020-06-22T10:42:12.828Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="JS问题"><a href="#JS问题" class="headerlink" title="JS问题"></a>JS问题</h1><a id="more"></a><h2 id="js存在变量提升"><a href="#js存在变量提升" class="headerlink" title="js存在变量提升"></a>js存在变量提升</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; 2;</span><br><span class="line">var a;</span><br><span class="line">console.log(a);</span><br></pre></td></tr></table></figure><p>以上的代码输出结果为2。原因是因为<strong>javascript并不是严格的自上而下执行的语言</strong>。</p><p>这个问题的关键就在于变量提升(hoisting)。<strong>它会将当前作用域的所有变量的声明提升到程序的顶部</strong>，因此上面的代码等价于以下代码。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a;</span><br><span class="line">a &#x3D; 2;</span><br><span class="line">console.log(a);</span><br></pre></td></tr></table></figure><p>接下来看下另外一个例子</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(a);</span><br><span class="line">var a &#x3D; 2;</span><br></pre></td></tr></table></figure><p>代码输出时显示<strong>undefined</strong>。原因是因为js会将变量的声明提升到顶部，可是赋值语句不会提升，因此上面的代码等同于以下代码。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a;</span><br><span class="line">console.log(a);</span><br><span class="line">a &#x3D; 2;</span><br></pre></td></tr></table></figure><h2 id="为什么会存在变量提升呢？"><a href="#为什么会存在变量提升呢？" class="headerlink" title="为什么会存在变量提升呢？"></a>为什么会存在变量提升呢？</h2><p>js和其他语言一样，都要经历编译和执行阶段。而js在编译阶段的时候，会搜集所有的变量声明并且提前声明变量，而不会改变其他语言的顺序，因此，在编译阶段的时候，第一步就已经执行了，而第二步则在执行阶段执行到该语句的时候才执行。</p><h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><p>js的变量声明大体分为三种: var声明、let和const声明和函数声明。<br>函数声明与其他声明一起的时候，就可能会引起一些困扰。看下面的例子。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line"></span><br><span class="line">function foo()&#123;</span><br><span class="line">    console.log(&#39;foo&#39;);</span><br><span class="line">&#125;</span><br><span class="line">var foo &#x3D; 2;</span><br></pre></td></tr></table></figure><p>最后输出的结果是foo。</p><p>引出的问题有: 当函数声明与其他声明一起出现的时候，是以谁为准？<br>答案是，<strong>函数声明高于一切</strong>。</p><p>再看下下面的例子。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line"></span><br><span class="line">function foo()&#123;</span><br><span class="line">    console.log(&#39;1&#39;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function foo()&#123;</span><br><span class="line">    console.log(&#39;2&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上面输出的结果为2。<strong>因为有多个函数声明的时候，是由最后的函数声明来代替前面的，类似于覆盖</strong>。再让我们通过下面的题目进行测试。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line"></span><br><span class="line">var foo &#x3D; function()&#123;</span><br><span class="line">    console.log(&#39;foo&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>该题可分为两部分，一部分是var foo，而一部分是foo = function(){}，参照例2，可知道该题显示的结果为undefined。</p><p>接着是let和const声明，let和const其实也是有函数提升的概念，不过他们会比较特殊，与var<br>不一样，它们存在一个临死性死区的概念。通过一个例子说明。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a &#x3D; 2;</span><br><span class="line">function test()&#123;</span><br><span class="line">    console.log(a);</span><br><span class="line">    let a &#x3D; 5;</span><br><span class="line">&#125;</span><br><span class="line">test();</span><br></pre></td></tr></table></figure><p>上述代码会报错”ReferenceError: a is not defined”。原因是：let虽然具有变量提升的功能，但是它由与var不一样，它具有一个临死性死区的概念。</p><p>临死性死区其实就是说，a我已经声明了，可是在没有到它赋值的时候，你都不能使用这个变量，不然就会报错。所以该当前作用域开始，一直到let a = 5为主这整一块，都是a变量的临死性死区，你不能使用它。</p><p>而const和let它们的变量提升的效果是一样的，也都存在着临死性死区的概念。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>1.js会将变量的声明提升到js顶部执行，因此对于:var a = 2;其实上js会将其分为var a;和a = 2;两部分，并且将var a 这一步提升到顶部执行。</p><p>2.变量提升的本质其实是由于js引擎在编译的时候，就将所有的变量声明了，因此在执行的时候，所有的变量都已经完成声明。</p><p>3.当有多个同名变量声明的时候，函数声明会覆盖其他的声明。如果有多个函数声明，则是由最后的一个函数声明覆盖之前所有的声明。</p><p>4.let和const都具有变量提升的效果 ，但是它们都具有临死性死区，从作用域开始部门，一直到变量的声明语句这整一块，你都不能使用该变量。</p><p>引用于知乎，链接:（<a href="https://zhuanlan.zhihu.com/p/43159665）" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/43159665）</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;JS问题&quot;&gt;&lt;a href=&quot;#JS问题&quot; class=&quot;headerlink&quot; title=&quot;JS问题&quot;&gt;&lt;/a&gt;JS问题&lt;/h1&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我的第一篇博客文章</title>
+    <link href="http://yoursite.com/2020/06/21/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/"/>
+    <id>http://yoursite.com/2020/06/21/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</id>
+    <published>2020-06-21T07:36:37.000Z</published>
+    <updated>2020-06-22T10:39:16.231Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="我的博客文章编写"><a href="#我的博客文章编写" class="headerlink" title="我的博客文章编写"></a>我的博客文章编写</h1><a id="more"></a><h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>使用标题时需要使用#号</p><h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>这是第一个段落内容</p><p>这是第二个段落内容</p><h2 id="标题区块引用"><a href="#标题区块引用" class="headerlink" title="标题区块引用"></a>标题区块引用</h2><blockquote><p>这是一段引用段落，将会被高亮显示</p></blockquote><h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p><a href="www.baidu.com">百度</a></p><h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><img src='https://imgsa.baidu.com/forum/w%3D580/sign=683a443775899e51788e3a1c72a5d990/2354d4086b63f62436a0aec98944ebf8184ca3cc.jpg' width = '300'><h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>*[注释]：注释内容</p><h2 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h2><ul><li>无序列表项</li><li>无序列表项</li><li>无序列表项<h2 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h2></li></ul><ol><li>有序列表项1</li><li>有序列表项2</li><li>有序列表项3<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2></li></ol><hr><hr><hr><h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><p><em>这里包含斜体内容</em></p><p><strong>这里包含加粗内容</strong></p><h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    fmt.Println(&quot;Hello, World&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="表头"><a href="#表头" class="headerlink" title="表头"></a>表头</h2><table><thead><tr><th>表头</th><th>表头</th><th>表头</th></tr></thead><tbody><tr><td>内容</td><td>内容</td><td>内容</td></tr><tr><td>内容</td><td>内容</td><td>内容</td></tr><tr><td>内容</td><td>内容</td><td>内容</td></tr></tbody></table><hr><hr><hr><hr><hr><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1430823226&auto=1&height=66"></iframe>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;我的博客文章编写&quot;&gt;&lt;a href=&quot;#我的博客文章编写&quot; class=&quot;headerlink&quot; title=&quot;我的博客文章编写&quot;&gt;&lt;/a&gt;我的博客文章编写&lt;/h1&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="markdown" scheme="http://yoursite.com/tags/markdown/"/>
+    
+  </entry>
+  
+</feed>
