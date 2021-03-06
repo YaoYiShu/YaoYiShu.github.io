@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | Hexo</title>
+  <title>JS问题一 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="JS 问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS问题一">
+<meta property="og:url" content="http://yoursite.com/2020/07/04/Js%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="JS 问题">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-04T15:44:03.828Z">
+<meta property="article:modified_time" content="2021-03-05T12:36:21.518Z">
 <meta property="article:author" content="YaoYiShu">
+<meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -164,35 +169,115 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+<article id="post-Js问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/04/Js%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-07-04T15:44:03.828Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-04</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/04/Js%E9%97%AE%E9%A2%98/">JS问题一</a>
+    <h1 class="article-title" itemprop="name">
+      JS问题一
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+
+        <!--显示阅读次数-->
+        
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+          </span>
+          </a>
+        
+
+        
+        <a href="/2020/07/04/Js%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-07-04T15:44:03.828Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JS-问题"><a href="#JS-问题" class="headerlink" title="JS 问题"></a>JS 问题</h1><a id="more"></a>
+
+<h2 id="js-存在变量提升"><a href="#js-存在变量提升" class="headerlink" title="js 存在变量提升"></a>js 存在变量提升</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; 2;</span><br><span class="line">var a;</span><br><span class="line">console.log(a);</span><br></pre></td></tr></table></figure>
+
+<p>以上的代码输出结果为 2。原因是因为<strong>javascript 并不是严格的自上而下执行的语言</strong>。</p>
+<p>这个问题的关键就在于变量提升(hoisting)。<strong>它会将当前作用域的所有变量的声明提升到程序的顶部</strong>，因此上面的代码等价于以下代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a;</span><br><span class="line">a &#x3D; 2;</span><br><span class="line">console.log(a);</span><br></pre></td></tr></table></figure>
+
+<p>接下来看下另外一个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(a);</span><br><span class="line">var a &#x3D; 2;</span><br></pre></td></tr></table></figure>
+
+<p>代码输出时显示<strong>undefined</strong>。原因是因为 js 会将变量的声明提升到顶部，可是赋值语句不会提升，因此上面的代码等同于以下代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a;</span><br><span class="line">console.log(a);</span><br><span class="line">a &#x3D; 2;</span><br></pre></td></tr></table></figure>
+
+<h2 id="为什么会存在变量提升呢？"><a href="#为什么会存在变量提升呢？" class="headerlink" title="为什么会存在变量提升呢？"></a>为什么会存在变量提升呢？</h2><p>js 和其他语言一样，都要经历编译和执行阶段。而 js 在编译阶段的时候，会搜集所有的变量声明并且提前声明变量，而不会改变其他语言的顺序，因此，在编译阶段的时候，第一步就已经执行了，而第二步则在执行阶段执行到该语句的时候才执行。</p>
+<h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><p>js 的变量声明大体分为三种: var 声明、let 和 const 声明和函数声明。<br>函数声明与其他声明一起的时候，就可能会引起一些困扰。看下面的例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line"></span><br><span class="line">function foo()&#123;</span><br><span class="line">    console.log(&#39;foo&#39;);</span><br><span class="line">&#125;</span><br><span class="line">var foo &#x3D; 2;</span><br></pre></td></tr></table></figure>
+
+<p>最后输出的结果是 foo。</p>
+<p>引出的问题有: 当函数声明与其他声明一起出现的时候，是以谁为准？<br>答案是，<strong>函数声明高于一切</strong>。</p>
+<p>再看下下面的例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line"></span><br><span class="line">function foo()&#123;</span><br><span class="line">    console.log(&#39;1&#39;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function foo()&#123;</span><br><span class="line">    console.log(&#39;2&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面输出的结果为 2。<strong>因为有多个函数声明的时候，是由最后的函数声明来代替前面的，类似于覆盖</strong>。再让我们通过下面的题目进行测试。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line"></span><br><span class="line">var foo &#x3D; function()&#123;</span><br><span class="line">    console.log(&#39;foo&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该题可分为两部分，一部分是 var foo，而一部分是 foo = function(){}，参照例 2，可知道该题显示的结果为 undefined。</p>
+<p>接着是 let 和 const 声明，let 和 const 其实也是有函数提升的概念，不过他们会比较特殊，与 var<br>不一样，它们存在一个临死性死区的概念。通过一个例子说明。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a &#x3D; 2;</span><br><span class="line">function test()&#123;</span><br><span class="line">    console.log(a);</span><br><span class="line">    let a &#x3D; 5;</span><br><span class="line">&#125;</span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会报错”ReferenceError: a is not defined”。原因是：let 虽然具有变量提升的功能，但是它由与 var 不一样，它具有一个临死性死区的概念。</p>
+<p>临死性死区其实就是说，a 我已经声明了，可是在没有到它赋值的时候，你都不能使用这个变量，不然就会报错。所以该当前作用域开始，一直到 let a = 5 为主这整一块，都是 a 变量的临死性死区，你不能使用它。</p>
+<p>而 const 和 let 它们的变量提升的效果是一样的，也都存在着临死性死区的概念。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>1.js 会将变量的声明提升到 js 顶部执行，因此对于:var a = 2;其实上 js 会将其分为 var a;和 a = 2;两部分，并且将 var a 这一步提升到顶部执行。</p>
+<p>2.变量提升的本质其实是由于 js 引擎在编译的时候，就将所有的变量声明了，因此在执行的时候，所有的变量都已经完成声明。</p>
+<p>3.当有多个同名变量声明的时候，函数声明会覆盖其他的声明。如果有多个函数声明，则是由最后的一个函数声明覆盖之前所有的声明。</p>
+<p>4.let 和 const 都具有变量提升的效果 ，但是它们都具有临死性死区，从作用域开始部门，一直到变量的声明语句这整一块，你都不能使用该变量。</p>
+<p>引用于知乎，链接:（<a href="https://zhuanlan.zhihu.com/p/43159665）" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/43159665）</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/pay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/weixin.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -204,57 +289,128 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://YaoYiShu.github.io/2020/07/04/Js%E9%97%AE%E9%A2%98/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/06/21/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" class="archive-article-date">
-  	<time datetime="2020-06-21T07:36:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-21</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2021/01/21/%E9%A1%B9%E7%9B%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          项目整理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/21/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">我的第一篇博客文章</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/21/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的第一篇博客文章</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">markdown</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JS-问题"><span class="toc-number">1.</span> <span class="toc-text">JS 问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#js-存在变量提升"><span class="toc-number">1.1.</span> <span class="toc-text">js 存在变量提升</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么会存在变量提升呢？"><span class="toc-number">1.2.</span> <span class="toc-text">为什么会存在变量提升呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量声明"><span class="toc-number">1.3.</span> <span class="toc-text">变量声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -288,8 +444,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
