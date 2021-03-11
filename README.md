@@ -2,7 +2,15 @@
 
 [vue音乐app](/music)
 
+![music](C:\Users\Admin\Desktop\music.png)
+
 [vue漫画app](/comic)
+
+![comic](C:\Users\Admin\Desktop\comic.png)
+
+NEW厂库-小程序
+
+![movie_gaitubao_256x256](C:\Users\Admin\Desktop\movie_gaitubao_256x256.jpg)
 
 之前学习写过的小案例、特效
 
